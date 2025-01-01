@@ -4,7 +4,7 @@ import Login from "./pages/login";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 function CheckAuth({ isAuthentication, children }) {
   return isAuthentication ? children : <Navigate to="/login" />;
