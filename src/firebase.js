@@ -1,10 +1,11 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAyUtmS71BD8iusCzfAT9pt8o-pbgHt1Tg",
+  apiKey: " AIzaSyAyUtmS71BD8iusCzfAT9pt8o-pbgHt1Tg",
   authDomain: "auth-fire-f8aed.firebaseapp.com",
   projectId: "auth-fire-f8aed",
   storageBucket: "auth-fire-f8aed.firebasestorage.app",
@@ -13,3 +14,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+
+export { auth };
