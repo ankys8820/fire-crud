@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { UserContext } from "../App.jsx";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+
+  const { currentUser, setSetCurrentUser } = useContext(UserContext);
 
   function handleLogin(e) {
     e.preventDefault();
@@ -16,13 +19,15 @@ const Login = () => {
         // Signed in
         const user = userCredential.user;
         setError(false);
-        console.log(user);
+        console.log(currentUser);
+        setSetCurrentUser({ user: user, isAuth: true });
         navigate("/");
       })
       .catch((error) => {
         setError(true);
       });
   }
+
   return (
     <>
       <div className="login">

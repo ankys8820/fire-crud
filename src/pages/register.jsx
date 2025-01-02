@@ -2,16 +2,16 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
-import { AuthContext } from "../context/AuthContext.jsx";
+import { UserContext } from "../App.jsx";
 
 const Register = () => {
   const [error, setError] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate();
+  const { setSetCurrentUser } = useContext(UserContext);
 
-  const { dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -19,8 +19,10 @@ const Register = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         // console.log(user);
+        setSetCurrentUser({ user: user, isAuth: true });
+        navigate("/");
         setError(false);
-        dispatch({ type: "REGISTER", payload: user });
+
         navigate("/");
       })
       .catch((error) => {
