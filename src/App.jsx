@@ -3,15 +3,16 @@ import Register from "./pages/register";
 import Login from "./pages/login";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
-import { Navigate, Route, Routes } from "react-router-dom";
-import { createContext, useEffect, useState } from "react";
-
-function CheckAuth({ isAuthentication, children }) {
-  return isAuthentication ? children : <Navigate to="/login" />;
-}
+import { Route, Routes } from "react-router-dom";
+import { Navigate, createContext, useEffect, useState } from "react";
+import Profile from "./pages/profile";
 
 const UserContext = createContext();
+
 function App() {
+  function CheckAuth({ isAuthentication, children }) {
+    return isAuthentication ? children : <Navigate to="/login" />;
+  }
   const [currentUser, setSetCurrentUser] = useState({
     user: JSON.parse(localStorage.getItem("user")) || {},
     isAuth: JSON.parse(localStorage.getItem("isAuth")) || false,
@@ -35,6 +36,16 @@ function App() {
               <CheckAuth isAuthentication={currentUser.isAuth}>
                 <Navbar>
                   <Home />
+                </Navbar>
+              </CheckAuth>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <CheckAuth isAuthentication={currentUser.isAuth}>
+                <Navbar>
+                  <Profile />
                 </Navbar>
               </CheckAuth>
             }

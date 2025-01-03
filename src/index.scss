@@ -102,3 +102,34 @@
     font-size: 20px;
   }
 }
+
+.profile {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    input {
+      width: 200px;
+      height: 30px;
+      margin: 10px;
+      border: none;
+    }
+
+    button {
+      width: 250px;
+      height: 30px;
+      margin: 10px;
+      border: none;
+      background-color: teal;
+      color: white;
+    }
+    button:hover {
+      color: white;
+      background-color: rgb(5, 61, 61);
+    }
+  }
+}

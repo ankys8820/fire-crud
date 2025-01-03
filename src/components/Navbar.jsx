@@ -23,7 +23,7 @@ const Navbar = ({ children }) => {
       <div className="navbar">
         <ul>
           <Link to="/">Home</Link>
-          <Link to="#">Profile</Link>
+          <Link to="/profile">Profile</Link>
           <Link to="#" onClick={handleLogout}>
             Sign Out
           </Link>
