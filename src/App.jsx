@@ -2,17 +2,17 @@ import "./index.scss";
 import Register from "./pages/register";
 import Login from "./pages/login";
 import Home from "./pages/Home";
-import Navbar from "./components/Navbar";
-import { Route, Routes } from "react-router-dom";
-import { Navigate, createContext, useEffect, useState } from "react";
 import Profile from "./pages/profile";
+import Navbar from "./components/Navbar";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { createContext, useEffect, useState } from "react";
+
+function CheckAuth({ isAuthentication, children }) {
+  return isAuthentication ? children : <Navigate to="/login" />;
+}
 
 const UserContext = createContext();
-
 function App() {
-  function CheckAuth({ isAuthentication, children }) {
-    return isAuthentication ? children : <Navigate to="/login" />;
-  }
   const [currentUser, setSetCurrentUser] = useState({
     user: JSON.parse(localStorage.getItem("user")) || {},
     isAuth: JSON.parse(localStorage.getItem("isAuth")) || false,
