@@ -3,8 +3,8 @@ import Register from "./pages/register";
 import Login from "./pages/login";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { createContext, useState } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { createContext, useEffect, useState } from "react";
 
 function CheckAuth({ isAuthentication, children }) {
   return isAuthentication ? children : <Navigate to="/login" />;
@@ -13,11 +13,16 @@ function CheckAuth({ isAuthentication, children }) {
 const UserContext = createContext();
 function App() {
   const [currentUser, setSetCurrentUser] = useState({
-    user: {},
-    isAuth: false,
+    user: JSON.parse(localStorage.getItem("user")) || {},
+    isAuth: JSON.parse(localStorage.getItem("isAuth")) || false,
     name: "Ankit",
   });
-  console.log(currentUser);
+
+  // # for refreshing the page
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(currentUser.user));
+    localStorage.setItem("isAuth", currentUser.isAuth);
+  }, [currentUser]);
   return (
     <>
       <UserContext.Provider value={{ currentUser, setSetCurrentUser }}>

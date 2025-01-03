@@ -34,6 +34,9 @@
     font-weight: bold;
     cursor: pointer;
   }
+  p {
+    margin-top: 15px;
+  }
 }
 
 // # for login
@@ -68,11 +71,15 @@
     font-weight: bold;
     cursor: pointer;
   }
+  p {
+    margin-top: 15px;
+  }
 }
 
 // # navbar
 
 .navbar {
+  top: -1;
   margin: 0;
   width: 100%;
   height: 50px;
