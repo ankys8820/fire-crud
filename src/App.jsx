@@ -12,7 +12,9 @@ function CheckAuth({ isAuthentication, children }) {
 }
 
 const UserContext = createContext();
+const TheamContext = createContext();
 function App() {
+  const [theam, setTheam] = useState("light");
   const [currentUser, setSetCurrentUser] = useState({
     user: JSON.parse(localStorage.getItem("user")) || {},
     isAuth: JSON.parse(localStorage.getItem("isAuth")) || false,
@@ -27,34 +29,36 @@ function App() {
   return (
     <>
       <UserContext.Provider value={{ currentUser, setSetCurrentUser }}>
-        <Routes>
-          <Route path="/register" element={<Register></Register>} />
-          <Route path="/login" element={<Login></Login>} />
-          <Route
-            path="/"
-            element={
-              <CheckAuth isAuthentication={currentUser.isAuth}>
-                <Navbar>
-                  <Home />
-                </Navbar>
-              </CheckAuth>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <CheckAuth isAuthentication={currentUser.isAuth}>
-                <Navbar>
-                  <Profile />
-                </Navbar>
-              </CheckAuth>
-            }
-          />
-        </Routes>
+        <TheamContext.Provider value={{ theam, setTheam }}>
+          <Routes>
+            <Route path="/register" element={<Register></Register>} />
+            <Route path="/login" element={<Login></Login>} />
+            <Route
+              path="/"
+              element={
+                <CheckAuth isAuthentication={currentUser.isAuth}>
+                  <Navbar>
+                    <Home />
+                  </Navbar>
+                </CheckAuth>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <CheckAuth isAuthentication={currentUser.isAuth}>
+                  <Navbar>
+                    <Profile />
+                  </Navbar>
+                </CheckAuth>
+              }
+            />
+          </Routes>
+        </TheamContext.Provider>
       </UserContext.Provider>
     </>
   );
 }
 
 export default App;
-export { UserContext };
+export { UserContext, TheamContext };

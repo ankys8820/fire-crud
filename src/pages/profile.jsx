@@ -1,20 +1,30 @@
 import { useContext } from "react";
 import { UserContext } from "../App";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [file, setFile] = useState("");
   const [data, setData] = useState({
     username: "",
     fullname: "",
-    email: "",
+    mobile: "",
     address: "",
     country: "",
-    password: "",
   });
   const { currentUser } = useContext(UserContext);
+
+  const navigate = useNavigate();
+
+  const id = currentUser?.user?.uid;
 
   const handleInput = (e) => {
     setData({
@@ -27,17 +37,19 @@ const Profile = () => {
   async function handleAdd(e) {
     e.preventDefault();
     try {
-      const res = await addDoc(collection(db, "users"), {
-        name: "Los Angeles",
-        state: "CA",
-        country: "USA",
+      const res = await setDoc(doc(db, "users", id), {
+        ...data,
+        email: currentUser?.user?.email,
         timeStamp: serverTimestamp(),
       });
-      console.log(res.id);
+      alert("Data successfully Saved", res);
+      navigate("/");
     } catch (e) {
       console.log(e);
     }
   }
+
+  console.log(data);
 
   return (
     <>
@@ -48,41 +60,48 @@ const Profile = () => {
           <input type="file" value={file} className="photo-input" />
           <input
             type="text"
+            name="username"
             onChange={handleInput}
             value={data.username}
             placeholder="Username"
           />
           <input
             type="text"
+            name="fullname"
             onChange={handleInput}
             value={data.fullname}
             placeholder="Name And Surname"
           />
           <input
-            type="email"
+            type="number"
+            name="mobile"
             onChange={handleInput}
-            value={data.email}
-            placeholder="Email"
+            value={data.mobile}
+            placeholder="Mobile"
           />
+
           <input
             type="text"
+            name="address"
             onChange={handleInput}
             value={data.address}
             placeholder="Address"
           />
           <input
             type="text"
+            name="country"
             onChange={handleInput}
             value={data.country}
             placeholder="County"
           />
-          <input
+          {/* <input
             type="password"
+            name="password"
             onChange={handleInput}
             value={data.password}
             placeholder="Password"
-          />
-          <button type="submit">Send</button>
+          /> */}
+          <button type="submit">Update & Save</button>
         </form>
       </div>
     </>
